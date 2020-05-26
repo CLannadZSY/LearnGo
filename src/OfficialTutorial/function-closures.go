@@ -19,10 +19,18 @@ func adder() func(int) int {
 	}
 }
 
+func AdderChange(x int) int {
+	sum := 0
+	sum += x
+	return sum
+}
+
 func main() {
 	pos, neg := adder(), adder()
-	fmt.Println(pos, neg)
+	PosAdd, NegAdd := AdderChange, AdderChange
+
 	for i := 0; i < 10; i++ {
-		fmt.Println(pos(i), neg(-2*i))
+		fmt.Println("i=", i, pos(i), neg(2*i), PosAdd(i), NegAdd(2*i))
 	}
+
 }
