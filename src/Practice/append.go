@@ -45,5 +45,6 @@ func main() {
 		fmt.Printf("%d cap=%d %v\n", i, cap(y), y)
 		x = y
 	}
+	fmt.Printf("x=%d\ny=%d", x, y)
 
 }
