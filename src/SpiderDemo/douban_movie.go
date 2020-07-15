@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/antchfx/htmlquery"
 	"github.com/gocolly/colly"
 	"golang.org/x/net/html"
@@ -39,11 +41,28 @@ func main() {
 
 	c.OnResponse(func(response *colly.Response) {
 		fmt.Println("OnResponse", response.StatusCode)
+
+		// 384.9441ms
+		t0 := time.Now()
 		htmlNodes, err := htmlquery.Parse(strings.NewReader(string(response.Body)))
 		if err != nil {
 			log.Fatal(err)
 		}
-		parseHtml(htmlNodes)
+		for i := 0; i < 1000; i++ {
+			parseHtml(htmlNodes)
+		}
+		fmt.Println(time.Since(t0))
+
+		//357.0443ms
+		t1 := time.Now()
+		doc, err := goquery.NewDocumentFromReader(bytes.NewReader(response.Body))
+		if err != nil {
+			log.Fatal(err)
+		}
+		for i := 0; i < 1000; i++ {
+			parseHtmlCss(doc)
+		}
+		fmt.Println(time.Since(t1))
 
 	})
 
@@ -74,4 +93,14 @@ func parseHtml(html *html.Node) {
 		fmt.Println(urlText)
 		fmt.Println(titleText)
 	}
+}
+
+func parseHtmlCss(doc *goquery.Document) {
+
+	doc.Find(".info").Each(func(i int, s *goquery.Selection) {
+		url := s.Find("a").AttrOr("href", "")
+		title := s.Find(".title").Text()
+		fmt.Println(url)
+		fmt.Println(title)
+	})
 }
