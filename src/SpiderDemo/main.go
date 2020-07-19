@@ -30,3 +30,13 @@ func main() {
 	// Start scraping on https://hackerspaces.org
 	c.Visit("https://hackerspaces.org")
 }
+
+// 添加自定义包的使用
+//package main
+//
+//import "SpiderDemo/redis_util"
+//
+//func main() {
+//	redis_util.ConnMethOne()
+//	redis_util.ConnMethTwo()
+//}
