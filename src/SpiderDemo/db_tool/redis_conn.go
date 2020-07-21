@@ -1,4 +1,4 @@
-package redis_util
+package redis_tool
 
 import (
 	"context"
