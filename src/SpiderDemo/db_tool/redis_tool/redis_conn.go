@@ -7,6 +7,8 @@ import (
 	"log"
 )
 
+// TODO 参照 mysql 工具包使用配置文件进行连接配置
+
 // 使用参数配置方式连接
 func ConnMethOne() {
 	rdb := redis.NewClient(&redis.Options{
@@ -19,9 +21,9 @@ func ConnMethOne() {
 	if err != nil {
 		if err == redis.Nil {
 			fmt.Println("key does not exists")
-			return
+			//return
 		}
-		panic(err)
+		log.Fatal(err)
 	}
 	fmt.Println(val)
 }
@@ -30,7 +32,7 @@ func ConnMethTwo() {
 	redisUrlDBOne := "redis://username:password@127.0.0.1:6379/1"
 	opt, err := redis.ParseURL(redisUrlDBOne)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	rdb := redis.NewClient(opt)
 	ctx := context.Background()
@@ -38,7 +40,7 @@ func ConnMethTwo() {
 	if err != nil {
 		if err == redis.Nil {
 			fmt.Println("key does not exists")
-			return
+			//return
 		}
 		log.Fatal(err)
 	}
@@ -51,7 +53,7 @@ func ConnMethTwo() {
 			fmt.Println("key does not exists")
 			return
 		}
-		panic(err)
+		log.Fatal(err)
 	}
 	fmt.Println(get.Val().(string))
 }
