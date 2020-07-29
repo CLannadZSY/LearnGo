@@ -31,12 +31,18 @@ func main() {
 	c.Visit("https://hackerspaces.org")
 }
 
-// 添加自定义包的使用
+//添加自定义包的使用
 //package main
 //
-//import "SpiderDemo/redis_util"
+//import (
+//	"SpiderDemo/db_tool/mysql_tool"
+//	"SpiderDemo/db_tool/redis_tool"
+//)
 //
 //func main() {
-//	redis_util.ConnMethOne()
-//	redis_util.ConnMethTwo()
+//	redis_tool.ConnMethOne()
+//	redis_tool.ConnMethTwo()
+//
+//	mysql_tool.DB.Init()
+//	defer mysql_tool.DB.Close()
 //}
