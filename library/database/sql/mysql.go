@@ -1,12 +1,10 @@
 package sql
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 	"github.com/pkg/errors"
 	"log"
-	"sync/atomic"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -33,20 +31,6 @@ type conn struct {
 type Rows struct {
 	*Rows
 	cancel func()
-}
-
-type Tx struct {
-	db     *conn
-	tx     *sql.Tx
-	c      context.Context
-	cancel func()
-}
-
-type Stmt struct {
-	db    *conn
-	tx    bool
-	query string
-	stmt  atomic.Value
 }
 
 // Configuration file structure
