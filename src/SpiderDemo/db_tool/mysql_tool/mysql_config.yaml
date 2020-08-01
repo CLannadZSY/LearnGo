@@ -1,8 +1,0 @@
-db_test:
- username: username
- password: password
- addr: 127.0.0.1
- port: 3306
- dbName: test
- MaxOpenConn: 100
- MaxIdleConn: 50
