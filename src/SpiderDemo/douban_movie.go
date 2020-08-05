@@ -12,15 +12,6 @@ import (
 	"time"
 )
 
-type item struct {
-	storyURL  string
-	Source    string
-	comments  string
-	CrawledAt time.Time
-	Comments  string
-	Title     string
-}
-
 func main() {
 	//stories := []item{}
 
