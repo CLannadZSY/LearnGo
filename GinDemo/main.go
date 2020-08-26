@@ -140,5 +140,33 @@ func main() {
 	//	v1.POST("/read", readEndpoint)
 	//}
 
+	// 11. Using middleware
+	//全局中间件
+	//记录程序中间件会将日志写入gin.DefaultWriter，即使您使用GIN_MODE = release进行设置。
+	//默认情况下gin.DefaultWriter = os.Stdout
+	//router.Use(gin.Logger())
+
+	//恢复中间件可从任何紧急情况中恢复，如果有，则写入500。
+	//router.Use(gin.Recovery())
+
+	// 对于每个路由中间件，您可以根据需要添加任意数量。
+	//router.GET("/benchmark", MyBenchLogger(), benchEndpoint)
+	// Authorization group
+	// authorized := r.Group("/", AuthRequired())
+	// exactly the same as:
+	//authorized := router.Group("/")
+	// per group middleware! in this case we use the custom created
+	// AuthRequired() middleware just in the "authorized" group.
+	//authorized.Use(AuthRequired())
+	//{
+	//	authorized.POST("/login", loginEndpoint)
+	//	authorized.POST("/submit", submitEndpoint)
+	//	authorized.POST("/read", readEndpoint)
+	//
+	//	// nested group
+	//	testing := authorized.Group("testing")
+	//	testing.GET("/analytics", analyticsEndpoint)
+	//}
+
 	router.Run(":8080")
 }
