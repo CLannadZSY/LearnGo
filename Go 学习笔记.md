@@ -40,3 +40,7 @@ go mod init project_name
   go list -m -f={{.Dir}}  print主模块的根目录
   go list -m all  查看当前的依赖和版本信息
 ```
+
+###### 新项目相关注意事项
+1. 设置 `Global Path`后还需要设置 `Porject Path`, 这样才能让你能使用其他文件夹中的相关文件
+2. `变量定义`: 首字母必须大写, 不然无法使用
