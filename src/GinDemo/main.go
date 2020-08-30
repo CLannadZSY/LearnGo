@@ -1,9 +1,7 @@
 package main
 
 import (
-	"GinDemo/model"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func main() {
@@ -228,20 +226,20 @@ func main() {
 
 	// 15. Model binding and validation 模型绑定和验证
 	// Example for binding JSON ({"user": "manu", "password": "123"})
-	router.POST("/loginJSON", func(c *gin.Context) {
-		var json model.Login
-		if err := c.ShouldBindJSON(&json); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-
-		if json.User != "manu" || json.Password != "123" {
-			c.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
-			return
-		}
-
-		c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
-	})
+	//router.POST("/loginJSON", func(c *gin.Context) {
+	//	var json model.Login
+	//	if err := c.ShouldBindJSON(&json); err != nil {
+	//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	//		return
+	//	}
+	//
+	//	if json.User != "manu" || json.Password != "123" {
+	//		c.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
+	//		return
+	//	}
+	//
+	//	c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
+	//})
 
 	// Example for binding XML (
 	//	<?xml version="1.0" encoding="UTF-8"?>
@@ -249,37 +247,70 @@ func main() {
 	//		<user>user</user>
 	//		<password>123</password>
 	//	</root>)
-	router.POST("/loginXML", func(c *gin.Context) {
-		var xml model.Login
-		if err := c.ShouldBindXML(&xml); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+	//router.POST("/loginXML", func(c *gin.Context) {
+	//	var xml model.Login
+	//	if err := c.ShouldBindXML(&xml); err != nil {
+	//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	//		return
+	//	}
+	//
+	//	if xml.User != "manu" || xml.Password != "123" {
+	//		c.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
+	//		return
+	//	}
+	//
+	//	c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
+	//})
+	//
+	//// Example for binding a HTML form (user=manu&password=123)
+	//router.POST("/loginForm", func(c *gin.Context) {
+	//	var form model.Login
+	//	// This will infer what binder to use depending on the content-type header.
+	//	if err := c.ShouldBind(&form); err != nil {
+	//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	//		return
+	//	}
+	//
+	//	if form.User != "manu" || form.Password != "123" {
+	//		c.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
+	//		return
+	//	}
+	//
+	//	c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
+	//})
 
-		if xml.User != "manu" || xml.Password != "123" {
-			c.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
-			return
-		}
+	// 16. Custom Validators
+	//if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+	//	v.RegisterValidation("bookabledate", model.BookableDate)
+	//}
+	//router.GET("/bookable", model.GetBookable)
 
-		c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
-	})
+	// 17. Only Bind Query String
+	//router.Any("/testing", model.StartPage)
 
-	// Example for binding a HTML form (user=manu&password=123)
-	router.POST("/loginForm", func(c *gin.Context) {
-		var form model.Login
-		// This will infer what binder to use depending on the content-type header.
-		if err := c.ShouldBind(&form); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+	// 18. Bind Query String or Post Data
+	//router.GET("/testing", model.StartPagePost)
 
-		if form.User != "manu" || form.Password != "123" {
-			c.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
-			return
-		}
+	//19 Bind Uri
+	//router.GET("/:name/:id", func(c *gin.Context) {
+	//	var person model.PersonUri
+	//	if err := c.ShouldBindUri(&person); err != nil {
+	//		c.JSON(http.StatusBadRequest, gin.H{"msg": err})
+	//		return
+	//	}
+	//	c.JSON(http.StatusOK, gin.H{"name": person.Name, "uuid": person.ID})
+	//})
 
-		c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
-	})
+	// 20. Bind Header
+	//router.GET("/", func(c *gin.Context) {
+	//	h := model.BindHeader{}
+	//	if err := c.ShouldBindHeader(&h); err != nil {
+	//		c.JSON(http.StatusOK, err)
+	//	}
+	//	fmt.Printf("%#v\n", h)
+	//	c.JSON(http.StatusOK, gin.H{"Rate": h.Rate, "Domain": h.Domain})
+	//})
 
 	router.Run(":8080")
+
 }
