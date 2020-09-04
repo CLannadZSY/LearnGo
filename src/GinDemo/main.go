@@ -1,7 +1,9 @@
 package main
 
 import (
+	"GinDemo/middleware"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -225,7 +227,7 @@ func main() {
 	//})
 
 	// 15. Model binding and validation 模型绑定和验证
-	// Example for binding JSON ({"user": "manu", "password": "123"})
+	//Example for binding JSON ({"user": "manu", "password": "123"})
 	//router.POST("/loginJSON", func(c *gin.Context) {
 	//	var json model.Login
 	//	if err := c.ShouldBindJSON(&json); err != nil {
@@ -427,6 +429,16 @@ func main() {
 	//	c.JSON(200, gin.H{"hello": "world"})
 	//})
 
-	router.Run(":8080")
+	// 28. Custom Middleware
+	router.Use(middleware.Logger())
+
+	router.GET("/test", func(c *gin.Context) {
+		example := c.MustGet("example").(string)
+
+		// it would print: "12345"
+		log.Println(example)
+	})
+
+	router.Run(":8088")
 
 }
