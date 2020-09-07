@@ -1,7 +1,10 @@
 package main
 
 import (
+	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/acme/autocert"
+	"log"
 	"net/http"
 )
 
@@ -439,33 +442,73 @@ func main() {
 	//})
 
 	// 29. Using BasicAuth() middleware
-	var secrets = gin.H{
-		"foo":    gin.H{"email": "foo@bar.com", "phone": "123433"},
-		"austin": gin.H{"email": "austin@example.com", "phone": "666"},
-		"lena":   gin.H{"email": "lena@guapa.com", "phone": "523443"},
-	}
+	//var secrets = gin.H{
+	//	"foo":    gin.H{"email": "foo@bar.com", "phone": "123433"},
+	//	"austin": gin.H{"email": "austin@example.com", "phone": "666"},
+	//	"lena":   gin.H{"email": "lena@guapa.com", "phone": "523443"},
+	//}
+	//
+	//// Group using gin.BasicAuth() middleware
+	//// gin.Accounts is a shortcut for map[string]string
+	//authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{
+	//	"foo":    "bar",
+	//	"austin": "1234",
+	//	"lena":   "hello2",
+	//	"manu":   "4321",
+	//}))
+	//
+	//// /admin/secrets endpoint
+	//// hit "localhost:8080/admin/secrets
+	//authorized.GET("/secrets", func(c *gin.Context) {
+	//	// get user, it was set by the BasicAuth middleware
+	//	user := c.MustGet(gin.AuthUserKey).(string)
+	//	if secret, ok := secrets[user]; ok {
+	//		c.JSON(http.StatusOK, gin.H{"user": user, "secret": secret})
+	//	} else {
+	//		c.JSON(http.StatusOK, gin.H{"user": user, "secret": "NO SECRET :("})
+	//	}
+	//})
 
-	// Group using gin.BasicAuth() middleware
-	// gin.Accounts is a shortcut for map[string]string
-	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{
-		"foo":    "bar",
-		"austin": "1234",
-		"lena":   "hello2",
-		"manu":   "4321",
-	}))
+	// 30. Goroutines inside a middleware
+	//router.GET("/long_async", func(c *gin.Context) {
+	//	cCp := c.Copy()
+	//	go func() {
+	//		time.Sleep(5 * time.Second)
+	//		log.Println("Done! in Path " + cCp.Request.URL.Path)
+	//	}()
+	//
+	//})
+	//
+	//router.GET("/long_sync", func(c *gin.Context) {
+	//	time.Sleep(5 * time.Second)
+	//	log.Println("Done! in Path " + c.Request.URL.Path)
+	//})
 
-	// /admin/secrets endpoint
-	// hit "localhost:8080/admin/secrets
-	authorized.GET("/secrets", func(c *gin.Context) {
-		// get user, it was set by the BasicAuth middleware
-		user := c.MustGet(gin.AuthUserKey).(string)
-		if secret, ok := secrets[user]; ok {
-			c.JSON(http.StatusOK, gin.H{"user": user, "secret": secret})
-		} else {
-			c.JSON(http.StatusOK, gin.H{"user": user, "secret": "NO SECRET :("})
-		}
-	})
+	// 31. Custom HTTP configuration
+	//http.ListenAndServe(":8080", router)
+	// or
+	//s := &http.Server{
+	//	Addr:           ":8080",
+	//	Handler:        router,
+	//	ReadTimeout:    10 * time.Second,
+	//	WriteTimeout:   10 * time.Second,
+	//	MaxHeaderBytes: 1 << 20,
+	//}
+	//s.ListenAndServe()
 
-	router.Run(":8088")
+	// 32. example for custom autocert manager.
+	//router.GET("/ping", func(c *gin.Context) {
+	//	c.String(http.StatusOK, "pong")
+	//})
+	//
+	//m := autocert.Manager{
+	//	Prompt: autocert.AcceptTOS,
+	//	HostPolicy: autocert.HostWhitelist("example1.com", "example2.com"),
+	//	Cache: autocert.DirCache("./Cache"),
+	//}
+	//
+	//log.Fatal(autotls.RunWithManager(router, &m))
+
+	//router.Run(":8088")
 
 }
