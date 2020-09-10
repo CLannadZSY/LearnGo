@@ -66,3 +66,10 @@ export GOPROXY=https://goproxy.io
 # 记得使用source激活
 ```
 
+2. Goland 开启设置
+
+   ```bash
+   Settings -> Go Modules -> Enable Go modules integration 勾选上即可
+   ```
+
+   这样就可以在任意目录下建立项目了
