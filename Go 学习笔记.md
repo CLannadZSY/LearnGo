@@ -44,3 +44,25 @@ go mod init project_name
 ###### 新项目相关注意事项
 1. 设置 `Global Path`后还需要设置 `Porject Path`, 这样才能让你能使用其他文件夹中的相关文件
 2. `变量定义`: 首字母必须大写, 不然无法使用
+
+###### go env 管理
+
+`windows`
+
+```bash
+go env -w GOPROXY=https://goproxy.io,direct
+go env -w GO111MODULE=on/auto
+```
+
+`linux`
+
+```bash
+# Enable the go modules feature
+export GO111MODULE=on/auto
+# Set the GOPROXY environment variable
+export GOPROXY=https://goproxy.io
+# 全局就修改 /etc/profile
+# 个人用户就修改 ~/.bash_profile 或 ~/.bashrc
+# 记得使用source激活
+```
+
