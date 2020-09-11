@@ -73,3 +73,11 @@ export GOPROXY=https://goproxy.io
    ```
 
    这样就可以在任意目录下建立项目了
+
+3. 初始化 mod
+
+   ```bash
+   go mod github.com/yourname/project_name
+   ```
+
+   
