@@ -52,6 +52,8 @@ go mod init project_name
 ```bash
 go env -w GOPROXY=https://goproxy.io,direct
 go env -w GO111MODULE=on/auto
+
+# 如果无法修改成功， 则需要去环境变量中去修改
 ```
 
 `linux`
